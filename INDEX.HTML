@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecosistema de Servicios Premium - La Porcada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F3E5AB;
+            --dark-bg: #0D1117;
+            --border-color: rgba(48, 54, 61, 0.8);
+            --text-primary: #F0F6FC;
+            --text-secondary: #C9D1D9;
+            --green-profit: #4CAF50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cinzel', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            /* Fondo con la imagen de la Isla Porcada buscándola en la carpeta images/ */
+            background-image: linear-gradient(rgba(13, 17, 23, 0.75), rgba(13, 17, 23, 0.85)), url('images/FOTO1.JPG');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; 
+            color: var(--text-primary);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1450px;
+            width: 100%;
+            background-color: rgba(13, 17, 23, 0.6); 
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+            backdrop-filter: blur(12px);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .top-logo { 
+            height: 80px; 
+            object-fit: contain; 
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+        }
+
+        .lang-btn {
+            background: rgba(13, 17, 23, 0.8);
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 12px 30px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn:hover { background: var(--gold); color: #000; }
+
+        .header { text-align: center; margin-bottom: 60px; }
+
+        .header h1 {
+            color: var(--gold);
+            font-size: 2.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.9);
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+        }
+
+        .section-divider {
+            width: 150px;
+            height: 2px;
+            background: var(--gold);
+            margin: 50px auto;
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        /* GRID DE SERVICIOS VISUALES */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.3);
+            border-color: var(--gold);
+        }
+
+        .card-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .card-bg {
+            transform: scale(1.05);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(13,17,23,0.1) 0%, rgba(13,17,23,0.9) 100%);
+            z-index: 1;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+            text-align: left;
+        }
+
+        .service-card h3 {
+            color: var(--gold-light);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
+        }
+
+        .service-card p {
+            color: #E8E8E8;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.9);
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .service-tag {
+            background: rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(4px);
+            color: var(--gold);
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        /* MÉTRICAS FINANCIERAS */
+        .finance-impact {
+            background: rgba(22, 27, 34, 0.8);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 50px 40px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            margin-bottom: 40px;
+        }
+
+        .finance-impact h2 {
+            color: var(--gold);
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .impact-box {
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            background: rgba(13,17,23,0.5);
+        }
+
+        .impact-box h4 {
+            color: #FFFFFF;
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .impact-value {
+            color: var(--gold);
+            font-size: 2.8rem;
+            font-weight: bold;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+            margin-bottom: 5px;
+        }
+
+        .impact-sub {
+            color: var(--green-profit);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .conclusion-box {
+            margin-top: 40px;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(13, 17, 23, 0.6));
+            border-radius: 10px;
+            border: 1px solid var(--gold);
+        }
+        
+        .conclusion-box p {
+            color: #FFFFFF;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .impact-value { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="top-bar">
+        <img src="images/LOGO.PNG" alt="Takyma Investment Pioneer" class="top-logo">
+        <button id="lang-toggle" class="lang-btn">EN / ES</button>
+        <img src="images/ECORESORT.PNG" alt="Ecoresort La Porcada" class="top-logo">
+    </div>
+
+    <div class="header">
+        <h1 data-es="El Ecosistema Perfecto: Lujo y Rentabilidad" data-en="The Perfect Ecosystem: Luxury and Profitability">El Ecosistema Perfecto: Lujo y Rentabilidad</h1>
+        <p data-es="Un ecosistema cerrado de servicios de ultra-lujo diseñados para retener al UHNWI dentro de nuestro perímetro, multiplicando exponencialmente la rentabilidad del proyecto." data-en="A closed ecosystem of ultra-luxury services designed to retain the UHNWI within our perimeter, exponentially multiplying project profitability.">Un ecosistema cerrado de servicios de ultra-lujo diseñados para retener al UHNWI dentro de nuestro perímetro, multiplicando exponencialmente la rentabilidad del proyecto.</p>
+    </div>
+
+    <!-- GRID DE SERVICIOS VISUALES -->
+    <div class="services-grid">
+        
+        <!-- 1. CASINO -->
+        <div class="service-card">
+            <div class="card-bg" style="background-image: url('images/CASINO.JPG');"></div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+                <h3 data-es="Casino Internacional High Roller" data-en="International High Roller Casino">Casino Internacional High Roller</h3>
+                <p data-es="Salas privadas de Baccarat, Poker y Ruleta con croupiers de élite. Límites de apuesta ilimitados exclusivos para miembros. Renta neta de juego estimada muy por encima del promedio internacional." data-en="Private Baccarat, Poker, and Roulette rooms with elite croupiers. Unlimited betting limits exclusive to members. Estimated net gaming revenue well above the international average.">Salas privadas de Baccarat, Poker y Ruleta con croupiers de élite. Límites de apuesta ilimitados exclusivos para miembros. Renta neta de juego estimada muy por encima del promedio internacional.</p>
+                <div class="tag-container">
+                    <span class="service-tag" data-es="Ingresos: $120M" data-en="Revenue: $120M">Ingresos: $120M</span>
+                    <span class="service-tag" data-es="Margen: 70%" data-en="Margin: 70%">Margen: 70%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. HÍPICA Y RANCHO -->
+        <div class="service-card">
+            <div class="card-bg" style="background-image: url('images/ELRANCHO.PNG');"></div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+                <h3 data-es="Hípica de Playa & Rancho Real" data-en="Beach Equestrian & Royal Ranch">Hípica de Playa & Rancho Real</h3>
+                <p data-es="Pista de carreras en playa de 13 km (estilo Sanlúcar de Barrameda). Gracias a la cesión de Ley de Costas, creamos un hipódromo de arena más glamouroso que la hierba tradicional. Las Villas Acuáticas actúan como palcos VIP (estilo Sanremo), viendo las carreras desde sus piscinas. Incluye cuadras de pedigree y ganadería propia de alta calidad." data-en="13km beach race track (Sanlúcar de Barrameda style). Thanks to Coastal Law easement, we create a sand racetrack more glamorous than traditional grass. The Overwater Villas act as VIP boxes (Sanremo style), watching races from their pools. Includes pedigree stables and own high-quality livestock.">Pista de carreras en playa de 13 km (estilo Sanlúcar de Barrameda). Gracias a la cesión de Ley de Costas, creamos un hipódromo de arena más glamouroso que la hierba tradicional. Las Villas Acuáticas actúan como palcos VIP (estilo Sanremo), viendo las carreras desde sus piscinas. Incluye cuadras de pedigree y ganadería propia de alta calidad.</p>
+                <div class="tag-container">
+                    <span class="service-tag" data-es="Ingresos: $25M" data-en="Revenue: $25M">Ingresos: $25M</span>
+                    <span class="service-tag" data-es="Margen: 55%" data-en="Margin: 55%">Margen: 55%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. FBO Y MANTENIMIENTO AVIONES -->
+        <div class="service-card">
+            <div class="card-bg" style="background-image: url('images/FOTO6.PNG');"></div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+                <h3 data-es="FBO Privado & Mantenimiento de Jets" data-en="Private FBO & Jet Maintenance">FBO Privado & Mantenimiento de Jets</h3>
+                <p data-es="Instalación FBO de propiedad exclusiva. Aterrizaje, hangareo, mantenimiento Clase A, detallado de interiores de lujo y reabastecimiento de combustible JET-A1 para la flota privada de nuestros 30,000 miembros globales." data-en="Exclusive FBO facility. Landing, hangaring, Class A maintenance, luxury interior detailing, and JET-A1 refueling for the private fleet of our 30,000 global members.">Instalación FBO de propiedad exclusiva. Aterrizaje, hangareo, mantenimiento Clase A, detallado de interiores de lujo y reabastecimiento de combustible JET-A1 para la flota privada de nuestros 30,000 miembros globales.</p>
+                <div class="tag-container">
+                    <span class="service-tag" data-es="Ingresos: $45M" data-en="Revenue: $45M">Ingresos: $45M</span>
+                    <span class="service-tag" data-es="Margen: 60%" data-en="Margin: 60%">Margen: 60%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. MARINA -->
+        <div class="service-card">
+            <div class="card-bg" style="background-image: url('images/PORTADA.PNG');"></div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+                <h3 data-es="Marina & Superyate Hub" data-en="Marina & Superyacht Hub">Marina & Superyate Hub</h3>
+                <p data-es="Atraques para yates de hasta 120 metros. Servicio de agencia, proveeduría de lujo (provisioning gourmet), reparación de fibra de carbono y pintura bajo agua. Venta de combustible marino duty-free para la flota más exigente del mundo." data-en="Berths for yachts up to 120 meters. Agency service, luxury gourmet provisioning, carbon fiber repair, and underwater painting. Duty-free marine fuel sales for the world's most demanding fleet.">Atraques para yates de hasta 120 metros. Servicio de agencia, proveeduría de lujo (provisioning gourmet), reparación de fibra de carbono y pintura bajo agua. Venta de combustible marino duty-free para la flota más exigente del mundo.</p>
+                <div class="tag-container">
+                    <span class="service-tag" data-es="Ingresos: $30M" data-en="Revenue: $30M">Ingresos: $30M</span>
+                    <span class="service-tag" data-es="Margen: 50%" data-en="Margin: 50%">Margen: 50%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. VILLAS Y MEMBRESÍA -->
+        <div class="service-card">
+            <div class="card-bg" style="background-image: url('images/MEM1.PNG');"></div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+                <h3 data-es="Membresía Exclusiva & Villas" data-en="Exclusive Membership & Villas">Membresía Exclusiva & Villas</h3>
+                <p data-es="El núcleo del proyecto. 30,000 membresías globales que generan $105M anuales recurrentes, más la venta de 50 Villas Conquistadores. Acceso a todas las instalaciones, spa, clínicas y experiencias náuticas. El pasaporte al absolute sanctuary." data-en="The core of the project. 30,000 global memberships generating $105M recurring annually, plus the sale of 50 Conqueror Villas. Access to all facilities, spa, clinics, and nautical experiences. The passport to the absolute sanctuary.">El núcleo del proyecto. 30,000 membresías globales que generan $105M anuales recurrentes, más la venta de 50 Villas Conquistadores. Acceso a todas las instalaciones, spa, clínicas y experiencias náuticas. El pasaporte al absolute sanctuary.</p>
+                <div class="tag-container">
+                    <span class="service-tag" data-es="Ingresos Base" data-en="Base Revenue">Ingresos Base</span>
+                    <span class="service-tag" data-es="Villas: $1,250M" data-en="Villas: $1,250M">Villas: $1,250M</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- IMPACTO FINANCIERO -->
+    <div class="finance-impact">
+        <h2 data-es="Impacto Financiero: El Ecosistema Cerrado" data-en="Financial Impact: The Closed Ecosystem">Impacto Financiero: El Ecosistema Cerrado</h2>
+        <p style="margin-bottom: 40px; color: var(--text-secondary);" data-es="Sumando estos servicios verticales a los ingresos base por hotel y membresías." data-en="Adding these vertical revenues to the base hotel and membership revenues.">Sumando estos servicios verticales a los ingresos base por hotel y membresías.</p>
+        
+        <div class="impact-grid">
+            <div class="impact-box">
+                <h4 data-es="Ingresos por Servicios Premium" data-en="Premium Services Revenue">Ingresos por Servicios Premium</h4>
+                <div class="impact-value">+$300M</div>
+                <div class="impact-sub" data-es="Inyección Anual Estimada" data-en="Estimated Annual Injection">Inyección Anual Estimada</div>
+            </div>
+            <div class="impact-box">
+                <h4 data-es="Nuevo Ingreso Bruto Total" data-en="New Total Gross Revenue">Nuevo Ingreso Bruto Total</h4>
+                <div class="impact-value">$850.2M</div>
+                <div class="impact-sub" data-es="($550.2M Base + $300M Servicios)" data-en="($550.2M Base + $300M Services)">($550.2M Base + $300M Servicios)</div>
+            </div>
+            <div class="impact-box">
+                <h4 data-es="Nuevo EBITDA Anual Proyectado" data-en="New Projected Annual EBITDA">Nuevo EBITDA Anual Proyectado</h4>
+                <div class="impact-value">$346.8M</div>
+                <div class="impact-sub" data-es="Margen Expandido al 40.7%" data-en="Margin Expanded to 40.7%">Margen Expandido al 40.7%</div>
+            </div>
+            <div class="impact-box">
+                <h4 data-es="Nuevo Flujo de Caja Libre Anual" data-en="New Annual Free Cash Flow">Nuevo Flujo de Caja Libre Anual</h4>
+                <div class="impact-value">$295.4M</div>
+                <div class="impact-sub" data-es="Puros a Takyma (Libres de Deuda)" data-en="Purely to Takyma (Debt-Free)">Puros a Takyma (Libres de Deuda)</div>
+            </div>
+        </div>
+
+        <div class="conclusion-box">
+            <p data-es="Con la integración de la Hípica de Playa, FBO y el Casino de alto nivel, el ROI acumulado de 10 años sobre el Equity de $300M saltaría del 629% a un asombroso <strong style='color: var(--gold); font-size: 1.4rem;'>1,081%</strong>." data-en="With the integration of Beach Equestrian, FBO, and the High-Level Casino, the 10-year cumulative ROI on the $300M Equity would jump from 629% to a staggering <strong style='color: var(--gold); font-size: 1.4rem;'>1,081%</strong>.">
+                Con la integración de la Hípica de Playa, FBO y el Casino de alto nivel, el ROI acumulado de 10 años sobre el Equity de $300M saltaría del 629% a un asombroso <strong style='color: var(--gold); font-size: 1.4rem;'>1,081%</strong>.
+            </p>
+        </div>
+    </div>
+
+    <div class="copyright">
+        &copy; 2026 Takyma Investment Pioneer · Ecoresort La Porcada
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const langBtn = document.getElementById('lang-toggle');
+        let currentLang = 'es';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            document.documentElement.lang = currentLang;
+            
+            document.querySelectorAll('[data-es]').forEach(el => {
+                el.innerHTML = el.getAttribute('data-' + currentLang);
+            });
+
+            langBtn.textContent = currentLang === 'es' ? 'EN / ES' : 'ES / EN';
+        }
+
+        langBtn.addEventListener('click', toggleLanguage);
+    });
+</script>
+
+</body>
+</html>
